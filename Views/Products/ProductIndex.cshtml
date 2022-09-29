@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SampleApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+<head>
+    <script src="~/js/productTable.js"></script>
+<link href="~/lib/datatables/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+</head>
+
+<h1>Products 
+ 
+    </h1>
+    <a asp-action="ProductCreate" class=" btn btn-primary float-end" >Add a Product</a><div class=" float-end">&nbsp;</div>
+    
+
+
+<table class="table table-hover " id="myTable" >
+    <thead class=" bg-dark text-light">
+        <tr>
+             <th>
+                @Html.DisplayNameFor(model => model.productId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th >
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                 <td>
+                      <a  style="text-decoration:none;color:inherit" asp-action="ProductEdit" asp-route-id="@item.productId" >
+                      @Html.DisplayFor(modelItem => item.productId)</a> 
+                          
+
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                $ @Html.DisplayFor(modelItem => item.price)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+   

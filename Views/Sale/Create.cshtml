@@ -1,0 +1,51 @@
+﻿@model SampleApp.Models.Sale
+
+@{
+    ViewData["Title"] = "Create Sale";
+}
+
+<h1>Add Sale Details</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="saleDate" class="control-label"></label>
+                <input asp-for="saleDate" class="form-control" />
+                <span asp-validation-for="saleDate" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="product" class="control-label"></label>
+                @Html.DropDownListFor(model=>model.product,ViewBag.prtb1 as SelectList,"--Select--", new{@class="form-control form-select"})
+                <span asp-validation-for="product" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="customerName" class="control-label"></label>
+                @Html.DropDownListFor(model=>model.customerName,ViewBag.crtb1 as SelectList,"--Select--", new{@class="form-control form-select"})
+                <span asp-validation-for="customerName" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="quantity" class="control-label"></label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />|
+                 <a asp-action="Index"class="btn btn-info">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

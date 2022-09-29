@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SampleApp.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customers";
+}
+<head>
+    <script src="~/js/productTable.js"></script>
+<link href="~/lib/datatables/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+</head>
+
+<h1>Customers
+
+
+    </h1>
+   <a class=" btn btn-primary float-end" asp-action="Create">Add Customers</a> <div class=" float-end">&nbsp; </div>
+
+<table class="table table-hover" id="myTable">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.customerId)
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                       <a style="text-decoration:none;color:inherit" asp-action="Edit" asp-route-id="@item.customerId"> @Html.DisplayFor(modelItem => item.customerId)</a>
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.customerFirstName)  @Html.DisplayFor(modelItem => item.customerLastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.region)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>

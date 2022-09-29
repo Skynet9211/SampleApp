@@ -1,0 +1,89 @@
+﻿@model IEnumerable<SampleApp.Models.Sale>
+
+@{
+    ViewData["Title"] = "Sales";
+     
+}
+<head>
+    <script src="~/js/productTable.js"></script>
+<link href="~/lib/datatables/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+</head>
+
+<h1>Sales
+
+                                            
+    <a class="btn btn-primary float-end" asp-action="Create">Create New</a></h1>  
+
+<table class="table table-hover"id="myTable">
+    <thead class=" bg-dark text-light">
+        <tr>
+             <th>
+                @Html.DisplayNameFor(model => model.saleId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.saleDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.total)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                 <td>
+                           <a style="text-decoration:none;color:inherit"
+                           asp-action="Edit" asp-route-id="@item.saleId"> @Html.DisplayFor(modelItem => item.saleId)</a>
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.saleDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.productId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product)
+            </td>
+            <td>
+              <a style="text-decoration:none;color:inherit" asp-controller="Customer" asp-action="Details" asp-route-id="@item.customerId">
+                       @Html.DisplayFor(modelItem => item.customerId)</a>
+            </td>
+            <td>
+                  
+                       @Html.DisplayFor(modelItem => item.customerName)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+               $@Html.DisplayFor(modelItem => item.total)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>
+

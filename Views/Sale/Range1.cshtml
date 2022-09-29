@@ -1,0 +1,122 @@
+﻿@model SampleApp.Models.spSales
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script src="~/js/productTable.js" ></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<style>
+    .drp-calendar.right {
+    display: none !important;
+  }
+</style>
+
+<input type="text" id="reportrange" style="cursor:pointer" autocomplete="off" placeholder="--Select Date--" /> | 
+<button class=" btn btn-primary" id="part">Search</button><br /><br /><br /><br />
+
+<input type="text" placeholder="Search" id="myInput" class=" float-end" /><br /><br />
+
+
+    <table class="table table-hover " id="reportTable"  >
+        <thead  class=" bg-dark text-light" >
+            <tr>
+                <th style="cursor:pointer"> 
+                    ID
+                
+                </th>
+                 <th style="cursor:pointer">
+            
+                    Name
+
+                </th>
+                 <th style="cursor:pointer">
+             
+                    Quantity
+
+                </th>
+                 <th style="cursor:pointer">
+              
+                    Total Amount
+
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tBody"></tbody>
+    </table>
+    
+
+
+
+
+<script > 
+ $(document).ready(function()
+{
+        $("#reportTable").hide();
+        $('#myInput').hide();
+       
+        
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tBody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+    $("#part").on("click",function()
+    {
+         $('#reportrange').attr("placeholder",startD
+        +"to"+endD)
+        $.ajax({
+            url:"/spSale/Range",
+            type:"POST",
+            data:{startDate:startD,endDate:endD},
+            success:function(data){
+                $('#tBody').empty();
+                 $("#reportTable").show();
+                  $('#myInput').show();
+                var arr=data.data;
+                //console.log(arr);
+              if(arr.length!=0)
+              {
+                for (var i=0; i<arr.length; i++) 
+                {
+                     var row = $('<tr><td>' + arr[i].productId+ '</td><td>' + arr[i].name + '</td><td>' + arr[i].quantity + '</td><td>$'+arr[i].totalAmount+'</td></tr>');
+                     $('#tBody').append(row);
+                }
+              }
+              else
+              {
+                var span='<tr><td></td><td></td><td colspan="2" class="align-center" >No Records Found!</td></tr>'
+                 $('#tBody').append(span);
+              }
+
+            },
+            error:function(err){
+                console.log(err);
+            }
+        });
+        $('th').on("click",function()
+        {
+             var table = $(this).parents('table').eq(0)
+             var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+             this.asc = !this.asc
+              if (!this.asc){rows = rows.reverse()}
+             for (var i = 0; i < rows.length; i++){table.append(rows[i])}
+        });
+        function comparer(index) 
+        {
+             return function(a, b) 
+             {
+                var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                 return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+             }
+        }
+        function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+
+    });
+});
+
+</script>  
+
+
